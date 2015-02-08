@@ -7,28 +7,46 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r echo=TRUE}
+
+```r
     activity <- read.csv('activity.csv')
     clean_steps <- activity[!is.na(activity$steps),]
 ```
 
 
 ## What is mean total number of steps taken per day?
-```{r echo=TRUE}
+
+```r
     activity <- read.csv('activity.csv')
     clean_steps <- activity[!is.na(activity$steps),]
     steps_per_day <- tapply(clean_steps$steps, factor(clean_steps$date), FUN=sum)
     hist(steps_per_day, xlab='Total Steps', main='Distribution of Total Steps Per Day', col='red')
+```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+
+```r
     mean(steps_per_day)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
     median(steps_per_day)
+```
+
+```
+## [1] 10765
 ```
 
 
 
 ## What is the average daily activity pattern?
 
-```{r echo=TRUE}
+
+```r
     activity <- read.csv('activity.csv')
     clean_steps <- activity[!is.na(activity$steps),]
     steps_per_interval <- tapply(clean_steps$steps, factor(clean_steps$interval), FUN=mean)
@@ -39,17 +57,32 @@ output:
          xlab="Minute Interval", 
          ylab="Avg. Steps", 
          main="Average Steps Taken Per 5 Minute Interval")
+```
 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+
+```r
     names(which.max(steps_per_interval))
+```
+
+```
+## [1] "835"
 ```
 
 
 ## Imputing missing values
 
-```{r echo=TRUE}
+
+```r
     activity <- read.csv('activity.csv')
     sum(is.na(activity))
+```
 
+```
+## [1] 2304
+```
+
+```r
     clean_steps <- activity[!is.na(activity$steps),]
     steps_per_interval <- tapply(clean_steps$steps, factor(clean_steps$interval), FUN=median)
 
@@ -63,10 +96,24 @@ output:
     steps_per_day <- tapply(interpreted_activity$steps, factor(interpreted_activity$date), FUN=sum)
 
     hist(steps_per_day, xlab='Total Steps', main='Distribution of Total Steps Per Day', col='red')
+```
 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+
+```r
     mean(steps_per_day)
-    median(steps_per_day)
+```
 
+```
+## [1] 9503.869
+```
+
+```r
+    median(steps_per_day)
+```
+
+```
+## [1] 10395
 ```
 
 Yes. There is a difference in the mean and median steps per day when we impute missing data.
@@ -74,7 +121,8 @@ Imputing the median has lowered both the mean and median of the total number of 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r echo=TRUE}
+
+```r
     library(lattice)
     activity <- read.csv('activity.csv')
     
@@ -111,3 +159,5 @@ Imputing the median has lowered both the mean and median of the total number of 
            type="l", 
            layout=c(1,2))
 ```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
